@@ -1,6 +1,6 @@
 from setuptools import setup
 
 setup(
-    name="quanauth",
-    packages=["quanauth"]
+    name="jauth",
+    packages=["jauth"]
 )

@@ -6,7 +6,7 @@ from jupyterhub.auth import Authenticator
 class DictAuthenticator(Authenticator):
 
     passwords = Dict(
-        {"a": "b"},
+        {"test1": "password", "test2": "password"},
         config=True
     )
 

@@ -1,23 +1,20 @@
+import os
+import json
+import requests
+
 from tornado import gen
 from jupyterhub.auth import Authenticator
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from .tables import User
 
 
 class DBAuthenticator(Authenticator):
 
     @gen.coroutine
     def authenticate(self, handler, data):
-        engine = create_engine('sqlite:///db/home/users.sqlite', echo=True)
-        Session = sessionmaker(bind=engine)
-        session = Session()
-        user = session.query(User).filter_by(username=data["username"]).first()
-        session.close()
+        dbauth_url = "http://" + os.environ.get("DBAUTH_SERVICE_HOST") + ":" + os.environ.get("DBAUTH_SERVICE_PORT") + "/users"
+        r = requests.get(dbauth_url, json={"username": data["username"]})
+        user = json.loads(r.text)
         if user:
-            if data["password"] == user.password:
+            if data["password"] == user[0]["password"]
                 return data['username']
         else:
             return None

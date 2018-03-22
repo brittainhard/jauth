@@ -14,7 +14,7 @@ class DBAuthenticator(Authenticator):
         r = requests.get(dbauth_url, json={"username": data["username"]})
         user = json.loads(r.text)
         if user:
-            if data["password"] == user["password"]
+            if data["password"] == user["password"]:
                 return data['username']
         else:
             return None

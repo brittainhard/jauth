@@ -10,7 +10,7 @@ class DBAuthenticator(Authenticator):
 
     @gen.coroutine
     def authenticate(self, handler, data):
-        dbauth_url = "http://" + os.environ.get("DBAUTH_SERVICE_HOST") + ":" + os.environ.get("DBAUTH_SERVICE_PORT") + "/users"
+        dbauth_url = "http://" + os.environ.get("DBAUTH_SERVICE_HOST") + ":" + os.environ.get("DBAUTH_SERVICE_PORT") + "/users/"
         r = requests.get(dbauth_url, json={"username": data["username"]})
         user = json.loads(r.text)
         if user:
